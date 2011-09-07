@@ -1,0 +1,772 @@
+unit sccca;
+interface
+uses scctype, sccda;
+
+{
+  Automatically converted by H2Pas 1.0.0 from D:\work\FPC\ooi\sccca.tmp.h
+  The following command line parameters were used:
+    -e
+    -p
+    -D
+    -v
+    -w
+    -o
+  And handmade update after it.
+}
+
+type
+//  PPSCCCAGETCONTENT  = ^PSCCCAGETCONTENT;
+//  PSCCCAGETCONTENT  = ^SCCCAGETCONTENT;
+//  PtagSCCCAGETCONTENT  = ^tagSCCCAGETCONTENT;
+//  PVTHCONTENT  = ^VTHCONTENT;
+//  PVTLPHCONTENT  = ^VTLPHCONTENT;
+  PVTVOID  = Pointer;
+
+
+  { Copyright (c) 2001, 2010, Oracle and/or its affiliates. All rights reserved.   }
+  {
+  |   Content Access
+  |   Include File sccca.h
+  |
+  |    CCC     A
+  |   C   C   A A
+  |   C      A   A
+  |   C      AAAAA
+  |   C   C  A   A
+  |    CCC   A   A
+  |
+   }
+
+  const
+     SCC_PACK_SET = 1;
+     SCC_PACKED_BY_SCCCA_H = 1;
+
+  {
+  |  T Y P E D E F S
+   }
+
+type
+   PVTHCONTENT = ^VTHCONTENT;
+   VTHCONTENT = VTHDOC;
+
+   PVTLPHCONTENT = ^VTLPHCONTENT;
+   VTLPHCONTENT = VTLPHDOC;
+
+const
+  CA_INVALIDITEM: VTDWORD = VTDWORD(-1);
+
+  {
+  |  S T R U C T U R E S
+   }
+
+  type
+
+     PSCCCAGETCONTENT = ^SCCCAGETCONTENT;
+     SCCCAGETCONTENT = record
+          dwStructSize : VTDWORD;
+          dwFlags : VTDWORD;
+          dwMaxBufSize : VTDWORD;
+          dwType : VTDWORD;
+          dwSubType : VTDWORD;
+          dwData1 : VTDWORD;
+          dwData2 : VTDWORD;
+          dwData3 : VTDWORD;
+          dwData4 : VTDWORD;
+          dwDataBufSize : VTDWORD;
+          pDataBuf : PVTVOID;
+       end;
+     PPSCCCAGETCONTENT = ^PSCCCAGETCONTENT;
+
+  { Possible values for SCCCAGETCONTENT.dwType  }
+  const
+     SCCCA_TEXT = $0001;     
+     SCCCA_BEGINTAG = $0002;     
+     SCCCA_ENDTAG = $0003;     
+     SCCCA_FILEPROPERTY = $0004;     
+     SCCCA_BREAK = $0005;     
+     SCCCA_OBJECT = $0006;     
+     SCCCA_STYLECHANGE = $0007;     
+     SCCCA_GENERATED = $0008;     
+     SCCCA_SHEET = $0009;     
+     SCCCA_ANNOTATION = $000a;     
+     SCCCA_TREENODELOCATOR = $000b;     
+     SCCCA_COMMENTREFERENCE = $000c;     
+  { If dwType equals SCCCA_OBJECT then dwSubType can be ...  }
+     SCCCA_EMBEDDEDOBJECT = $00000000;     
+  {Used for Folder nodes }
+     SCCCA_ARCHIVEITEMCONTAINER = $00010000;     
+  {Compressed File or the filter does not define node types }
+     SCCCA_COMPRESSEDFILE = $00020000;     
+     SCCCA_MESSAGE = $00030000;     
+     SCCCA_CONTACT = $00040000;     
+     SCCCA_CALENDARENTRY = $00050000;     
+     SCCCA_NOTE = $00060000;     
+     SCCCA_TASK = $00070000;     
+     SCCCA_JOURNALENTRY = $00080000;     
+     SCCCA_ATTACHMENT = $00090000;     
+     SCCCA_FIELDSFILE = $000A0000;     
+  { If dwType equals SCCCA_TEXT or SCCCA_GENERATED then dwSubType can be ...  }
+     SCCCA_DOCUMENTTEXT = $00000001;     
+     SCCCA_SPECIALTEXT = $00000002;     
+  { Not currently implemented  }
+     SCCCA_OCRTEXT = $00000004;     
+  { If dwType equals SCCCA_GENERATED then dwSubType can be ...  }
+     SCCCA_XMPMETADATA = $00000008;     
+     SCCCA_URLTEXT = $00000010;     
+  { High Word Masks for dwSubType  }
+     SCCCA_REVISIONDELETE = $00010000;     
+     SCCCA_BOLD = $00020000;     
+     SCCCA_ITALIC = $00040000;     
+     SCCCA_UNDERLINE = $00080000;     
+     SCCCA_DUNDERLINE = $00100000;     
+     SCCCA_OUTLINE = $00200000;
+     SCCCA_HIDDEN = $00400000;     
+     SCCCA_STRIKEOUT = $00800000;     
+     SCCCA_SMALLCAPS = $01000000;     
+     SCCCA_ALLCAPS = $02000000;     
+     SCCCA_OCEMASK = $04000000;     
+     SCCCA_UNKNOWNMAP = $08000000;     
+     SCCCA_REVISIONADD = $10000000;     
+     SCCCA_ANYHIDDEN = SCCCA_HIDDEN or SCCCA_REVISIONDELETE;     
+     SCCCA_ANYUNDERLINE = SCCCA_UNDERLINE or SCCCA_DUNDERLINE;
+
+     SCCCA_ALLCHARATTRS =
+      SCCCA_BOLD or
+      SCCCA_ITALIC or
+      SCCCA_UNDERLINE or
+      SCCCA_DUNDERLINE or
+      SCCCA_OUTLINE or
+      SCCCA_HIDDEN or
+      SCCCA_STRIKEOUT or
+      SCCCA_SMALLCAPS or
+      SCCCA_ALLCAPS or
+      SCCCA_OCEMASK or
+      SCCCA_REVISIONDELETE or
+      SCCCA_REVISIONADD;
+
+  { If dwType equals SCCCA_BEGINTAG or SCCCA_ENDTAG then dwSubType can ...  }
+  {
+      Anything that gets added here should have a corresponding string added in
+      exd_ixml.c.  TAGNAMETBLSIZE will need to be changed in ex_main.h.  The
+      SearchML schema will also have to change.
+   }
+     SCCCA_DOCUMENTPROPERTY = $00010000;     
+     SCCCA_BOOKMARK = $00020000;     
+     SCCCA_HYPERLINK = $00030000;     
+     SCCCA_COMPILEDFIELD = $00040000;     
+     SCCCA_FOOTNOTEREFERENCE = $00050000;     
+     SCCCA_ANNOTATIONREFERENCE = $00060000;     
+     SCCCA_ENDNOTEREFERENCE = $00070000;     
+     SCCCA_STYLE = $00080000;     
+     SCCCA_FRAME = $00090000;     
+     SCCCA_SUBDOCTEXT = $000a0000;     
+     SCCCA_MERGEENTRY = $000b0000;     
+     SCCCA_INDEXENTRY = $000c0000;     
+     SCCCA_LISTENTRY = $000d0000;     
+     SCCCA_DATEDEFINITION = $000e0000;     
+     SCCCA_CUSTOMDATAFORMAT = $00100000;     
+     SCCCA_NAMEDCELLRANGE = $00110000;     
+     SCCCA_COUNTERFORMAT = $00120000;     
+     SCCCA_INLINEDATAFORMAT = $00130000;     
+     SCCCA_CAPTIONTEXT = $00140000;     
+     SCCCA_VECTORSAVETAG = $00150000;     
+     SCCCA_TOCENTRY = $00160000;     
+     SCCCA_TOC = $00170000;     
+     SCCCA_INDEX = $00180000;     
+     SCCCA_TOF = $00190000;     
+     SCCCA_TOA = $001a0000;
+     SCCCA_TOAENTRY = $001b0000;     
+     SCCCA_DOCUMENTPROPERTYNAME = $001c0000;     
+     SCCCA_XREF = $001d0000;     
+     SCCCA_GENERATOR = $001e0000;     
+     SCCCA_CHARACTER = $00200000;     
+     SCCCA_GENERATEDFIELD = $00210000;     
+     SCCCA_ALTFONTDATA = $00220000;     
+     SCCCA_FONTANDGLYPHDATA = $00230000;     
+     SCCCA_REFERENCEDTEXT = $00240000;     
+     SCCCA_SSHEADERFOOTER = $00250000;     
+     SCCCA_FRAME_EX = $00260000;     
+     SCCCA_SLIDENOTES = $00270000;     
+     SCCCA_LINKEDOBJECT = $00280000;     
+     SCCCA_EMAILFIELD = $00290000;     
+     SCCCA_EMAILTABLE = $002a0000;     
+  { Not currently implemented  }
+     SCCCA_INTERNALLINK = $002b0000;     
+     SCCCA_DIAGRAM = $002c0000;     
+     SCCCA_DIAGRAM_LAYOUT = $002d0000;     
+     SCCCA_DIAGRAM_NODE = $002e0000;     
+     SCCCA_DIAGRAM_COLORSTYLE = $00300000;     
+     SCCCA_DIAGRAM_QUICKSTYLE = $00310000;     
+     SCCCA_DIAGRAM_COLORSTYLE_FILL = $00320000;     
+     SCCCA_DIAGRAM_COLORSTYLE_LINE = $00330000;     
+     SCCCA_DIAGRAM_BULLET = $00340000;     
+     SCCCA_DIAGRAM_LAYOUTNODE = $00350000;     
+     SCCCA_DIAGRAM_ALGORITHM = $00360000;     
+     SCCCA_DIAGRAM_CHOOSE = $00370000;     
+     SCCCA_DIAGRAM_IF = $00380000;     
+     SCCCA_DIAGRAM_ELSE = $00390000;     
+     SCCCA_DIAGRAM_FOREACH = $003a0000;     
+     SCCCA_DIAGRAM_CONSTRAINT = $003b0000;     
+     SCCCA_DIAGRAM_RULE = $003c0000;     
+     SCCCA_DIAGRAM_PRESOF = $003d0000;     
+     SCCCA_DIAGRAM_SHAPE = $003e0000;     
+     SCCCA_CONDITIONALSTYLE = $003f0000;     
+     SCCCA_XMPDATA = $00400000;     
+     SCCCA_RENDEREFFECTS = $00410000;     
+     SCCCA_EMAILFIELDNAME = $00420000;     
+     SCCCA_SUBDOCPROPERTY = $00430000;     
+     SCCCA_HEADER = $00440000;
+     SCCCA_FOOTER = $00450000;
+  { If dwType equals SCCCA_FILEPROPERTY then dwSubType can ...  }
+     SCCCA_FILEID = $0001;
+  { Possible values for dwData1 element of SCCCAGETCONTENT  }
+  {
+  |   If dwType equals SCCCA_TEXT
+  |   then dwData1 is the number of characters represented by the data
+  |   returned in pDataBuf (this may be different than the size of the
+  |   data returned in pDataBuf since DBCS and UNICODE output are not
+  |   one for one with the character count).
+   }
+  {
+  |   If dwType equals SCCCA_BEGINTAG or SCCCA_ENDTAG
+  |   and dwSubType equals SCCCA_DOCUMENTPROPERTY
+  |   then dwData1 can be:
+   }
+  { Document properties  }
+     SCCCA_DOCCOMMENT = 1;     
+     SCCCA_KEYWORD = 2;     
+     SCCCA_LASTSAVEDBY = 3;     
+     SCCCA_PRIMARYAUTHOR = 4;     
+     SCCCA_SUBJECT = 5;     
+     SCCCA_TITLE = 6;     
+     SCCCA_ABSTRACT = 7;     
+     SCCCA_ACCOUNT = 8;     
+     SCCCA_ADDRESS = 9;     
+     SCCCA_ATTACHMENTS = 10;     
+     SCCCA_AUTHORIZATION = 11;     
+     SCCCA_BACKUPDATE = 12;     
+     SCCCA_BILLTO = 13;     
+     SCCCA_BLINDCOPY = 14;     
+     SCCCA_CARBONCOPY = 15;     
+     SCCCA_CATEGORY = 16;     
+     SCCCA_CHECKEDBY = 17;     
+     SCCCA_CLIENT = 18;     
+     SCCCA_COMPLETEDDATE = 19;     
+     SCCCA_COUNTCHARS = 20;     
+     SCCCA_COUNTPAGES = 21;     
+     SCCCA_COUNTWORDS = 22;     
+     SCCCA_CREATIONDATE = 23;     
+     SCCCA_DEPARTMENT = 24;     
+     SCCCA_DESTINATION = 25;     
+     SCCCA_DISPOSITION = 26;     
+     SCCCA_DIVISION = 27;     
+     SCCCA_EDITMINUTES = 28;     
+     SCCCA_EDITOR = 29;     
+     SCCCA_FORWARDTO = 30;     
+     SCCCA_GROUP = 31;     
+     SCCCA_LANGUAGE = 32;
+     SCCCA_LASTPRINTDATE = 33;     
+     SCCCA_MAILSTOP = 34;     
+     SCCCA_MATTER = 35;     
+     SCCCA_OFFICE = 36;     
+     SCCCA_OPERATOR = 37;     
+     SCCCA_OWNER = 38;     
+     SCCCA_PROJECT = 39;     
+     SCCCA_PUBLISHER = 40;     
+     SCCCA_PURPOSE = 41;     
+     SCCCA_RECEIVEDFROM = 42;     
+     SCCCA_RECORDEDBY = 43;     
+     SCCCA_RECORDEDDATE = 44;     
+     SCCCA_REFERENCE = 45;     
+     SCCCA_REVISIONDATE = 46;     
+     SCCCA_REVISIONNOTES = 47;     
+     SCCCA_REVISIONNUMBER = 48;     
+     SCCCA_SECONDARYAUTHOR = 49;     
+     SCCCA_SECTION = 50;     
+     SCCCA_SECURITY = 51;     
+     SCCCA_SOURCE = 52;     
+     SCCCA_STATUS = 53;     
+     SCCCA_DOCTYPE = 54;     
+     SCCCA_TYPIST = 55;     
+     SCCCA_VERSIONDATE = 56;     
+     SCCCA_VERSIONNOTES = 57;     
+     SCCCA_VERSIONNUMBER = 58;     
+     SCCCA_BASEFILELOCATION = 59;     
+     SCCCA_MANAGER = 60;     
+     SCCCA_COMPANY = 61;     
+     SCCCA_LASTSAVEDATE = 62;     
+     SCCCA_PRESENTATIONFORMAT = 63;     
+     SCCCA_COUNTBYTES = 64;     
+     SCCCA_COUNTLINES = 65;     
+     SCCCA_COUNTPARAS = 66;     
+     SCCCA_COUNTSLIDES = 67;     
+     SCCCA_COUNTSLIDESHIDDEN = 68;     
+     SCCCA_COUNTNOTES = 69;     
+     SCCCA_COUNTMMCLIPS = 70;     
+     SCCCA_COUNTCHARSWITHSPACES = 71;     
+     SCCCA_SCALECROP = 72;     
+     SCCCA_LINKSDIRTY = 73;
+     SCCCA_TITLEOFPARTS = 74;     
+     SCCCA_HEADINGPAIRS = 75;     
+     SCCCA_DOCNUMBER = 76;     
+  { ID3 Document Properties           }
+     SCCCA_ID3_AENC = 77;     
+     SCCCA_ID3_APIC = 78;     
+     SCCCA_ID3_ASPI = 79;     
+     SCCCA_ID3_COMM = 80;     
+     SCCCA_ID3_COMR = 81;     
+     SCCCA_ID3_ENCR = 82;     
+     SCCCA_ID3_EQUA = 83;     
+     SCCCA_ID3_EQU2 = 84;     
+     SCCCA_ID3_ETCO = 85;     
+     SCCCA_ID3_GEOB = 86;     
+     SCCCA_ID3_GRID = 87;     
+     SCCCA_ID3_IPLS = 88;     
+     SCCCA_ID3_LINK = 89;     
+     SCCCA_ID3_MCDI = 90;     
+     SCCCA_ID3_MLLT = 91;     
+     SCCCA_ID3_OWNE = 92;     
+     SCCCA_ID3_PRIV = 93;     
+     SCCCA_ID3_PCNT = 94;     
+     SCCCA_ID3_POPM = 95;     
+     SCCCA_ID3_POSS = 96;     
+     SCCCA_ID3_RBUF = 97;     
+     SCCCA_ID3_RVAD = 98;     
+     SCCCA_ID3_RVA2 = 99;     
+     SCCCA_ID3_RVRB = 100;     
+     SCCCA_ID3_SEEK = 101;     
+     SCCCA_ID3_SIGN = 102;     
+     SCCCA_ID3_SYLT = 103;     
+     SCCCA_ID3_SYTC = 104;     
+     SCCCA_ID3_TALB = 105;     
+     SCCCA_ID3_TBPM = 106;     
+     SCCCA_ID3_TCOM = 107;     
+     SCCCA_ID3_TCON = 108;     
+     SCCCA_ID3_TCOP = 109;     
+     SCCCA_ID3_TDAT = 110;     
+     SCCCA_ID3_TDLY = 111;     
+     SCCCA_ID3_TENC = 112;     
+     SCCCA_ID3_TEXT = 113;
+     SCCCA_ID3_TFLT = 114;     
+     SCCCA_ID3_TIME = 115;     
+     SCCCA_ID3_TIPL = 116;     
+     SCCCA_ID3_TIT1 = 117;     
+     SCCCA_ID3_TIT2 = 118;     
+     SCCCA_ID3_TIT3 = 119;     
+     SCCCA_ID3_TKEY = 120;     
+     SCCCA_ID3_TLAN = 121;     
+     SCCCA_ID3_TLEN = 122;     
+     SCCCA_ID3_TMCL = 123;     
+     SCCCA_ID3_TMOO = 124;     
+     SCCCA_ID3_TMED = 125;     
+     SCCCA_ID3_TOAL = 126;     
+     SCCCA_ID3_TOFN = 127;     
+     SCCCA_ID3_TOLY = 128;     
+     SCCCA_ID3_TOPE = 129;     
+     SCCCA_ID3_TORY = 130;     
+     SCCCA_ID3_TOWN = 131;     
+     SCCCA_ID3_TPE1 = 132;     
+     SCCCA_ID3_TPE2 = 133;     
+     SCCCA_ID3_TPE3 = 134;     
+     SCCCA_ID3_TPE4 = 135;     
+     SCCCA_ID3_TPOS = 136;     
+     SCCCA_ID3_TPRO = 137;     
+     SCCCA_ID3_TPUB = 138;     
+     SCCCA_ID3_TRCK = 139;     
+     SCCCA_ID3_TRDA = 140;     
+     SCCCA_ID3_TRSN = 141;     
+     SCCCA_ID3_TRSO = 142;     
+     SCCCA_ID3_TSIZ = 143;     
+     SCCCA_ID3_TSRC = 144;     
+     SCCCA_ID3_TSOA = 145;     
+     SCCCA_ID3_TSOP = 146;     
+     SCCCA_ID3_TSOT = 147;     
+     SCCCA_ID3_TSSE = 148;     
+     SCCCA_ID3_TSST = 149;     
+     SCCCA_ID3_TYER = 150;     
+     SCCCA_ID3_UFID = 151;     
+     SCCCA_ID3_USER = 152;     
+     SCCCA_ID3_USLT = 153;     
+     SCCCA_ID3_WCOM = 154;
+     SCCCA_ID3_WCOP = 155;     
+     SCCCA_ID3_WOAF = 156;     
+     SCCCA_ID3_WOAR = 157;     
+     SCCCA_ID3_WOAS = 158;     
+     SCCCA_ID3_WORS = 159;     
+     SCCCA_ID3_WPAY = 160;     
+     SCCCA_ID3_WPUB = 161;     
+     SCCCA_APPVERSION = 162;     
+  { Multimedia document properties  }
+     SCCCA_MULTIMEDIA_ALBUM = 163;     
+     SCCCA_MULTIMEDIA_ARRANGER = 164;     
+     SCCCA_MULTIMEDIA_ARTIST = 165;     
+     SCCCA_MULTIMEDIA_AUTHOR = 166;     
+     SCCCA_MULTIMEDIA_CHAPTER = 167;     
+     SCCCA_MULTIMEDIA_COMMENT = 168;     
+     SCCCA_MULTIMEDIA_COMPOSER = 169;     
+     SCCCA_MULTIMEDIA_COPYRIGHT = 170;     
+     SCCCA_MULTIMEDIA_CREATIONDATE = 171;     
+     SCCCA_MULTIMEDIA_DESCRIPTION = 172;     
+     SCCCA_MULTIMEDIA_DIRECTOR = 173;     
+     SCCCA_MULTIMEDIA_DISCLAIMER = 174;     
+     SCCCA_MULTIMEDIA_EDITDATEDESCRIPTION = 175;     
+     SCCCA_MULTIMEDIA_ENCODER = 176;     
+     SCCCA_MULTIMEDIA_FORMAT = 177;     
+     SCCCA_MULTIMEDIA_GENRE = 178;     
+     SCCCA_MULTIMEDIA_HOSTCOMPUTER = 179;     
+     SCCCA_MULTIMEDIA_INFO = 180;     
+     SCCCA_MULTIMEDIA_ISRC = 181;     
+     SCCCA_MULTIMEDIA_RECORDLABEL = 182;     
+     SCCCA_MULTIMEDIA_RECORDLABELURL = 183;     
+     SCCCA_MULTIMEDIA_FILECREATOR = 184;     
+     SCCCA_MULTIMEDIA_FILECREATORURL = 185;     
+     SCCCA_MULTIMEDIA_MODEL = 186;     
+     SCCCA_MULTIMEDIA_TITLE = 187;     
+     SCCCA_MULTIMEDIA_ORIGINALARTIST = 188;     
+     SCCCA_MULTIMEDIA_RECORDINGCOPYRIGHT = 189;     
+     SCCCA_MULTIMEDIA_PRODUCER = 190;     
+     SCCCA_MULTIMEDIA_PERFORMER = 191;     
+     SCCCA_MULTIMEDIA_PERFORMERURL = 192;     
+     SCCCA_MULTIMEDIA_PRODUCT = 193;     
+     SCCCA_MULTIMEDIA_HWSWREQS = 194;
+     SCCCA_MULTIMEDIA_SUBTITLE = 195;     
+     SCCCA_MULTIMEDIA_SOURCECREDITS = 196;     
+     SCCCA_MULTIMEDIA_SONGWRITER = 197;     
+     SCCCA_MULTIMEDIA_SOFTWARE = 198;     
+     SCCCA_MULTIMEDIA_TRACK = 199;     
+     SCCCA_MULTIMEDIA_WARNING = 200;     
+     SCCCA_MULTIMEDIA_WRITER = 201;     
+     SCCCA_MULTIMEDIA_URL = 202;     
+     SCCCA_MULTIMEDIA_WIDTH = 203;     
+     SCCCA_MULTIMEDIA_HEIGHT = 204;     
+     SCCCA_MULTIMEDIA_RATING = 205;     
+     SCCCA_MULTIMEDIA_ENCODERDESCRIPTION = 206;     
+     SCCCA_MULTIMEDIA_KEYWORDS = 207;     
+     SCCCA_MULTIMEDIA_RELATED = 208;     
+     SCCCA_MULTIMEDIA_CREATIONTIME = 209;     
+     SCCCA_MULTIMEDIA_MANUFACTURER = 210;     
+     SCCCA_MULTIMEDIA_ARCHIVE = 211;     
+     SCCCA_MULTIMEDIA_COMMISSIONEDBY = 212;     
+     SCCCA_MULTIMEDIA_CROPPED = 213;     
+     SCCCA_MULTIMEDIA_DIMENSIONS = 214;     
+     SCCCA_MULTIMEDIA_RESOLUTION = 215;     
+     SCCCA_MULTIMEDIA_ENGINEER = 216;     
+     SCCCA_MULTIMEDIA_LIGHTNESS = 217;     
+     SCCCA_MULTIMEDIA_MEDIUM = 218;     
+     SCCCA_MULTIMEDIA_PALETTE = 219;     
+     SCCCA_MULTIMEDIA_SUBJECT = 220;     
+     SCCCA_MULTIMEDIA_SHARPNESS = 221;     
+     SCCCA_MULTIMEDIA_SOURCEFORM = 222;     
+     SCCCA_MULTIMEDIA_TECHNICIAN = 223;     
+     SCCCA_MULTIMEDIA_NUMBEROFCHANNELS = 224;     
+     SCCCA_MULTIMEDIA_SAMPLINGRATE = 225;     
+     SCCCA_MULTIMEDIA_GROUPING = 226;     
+     SCCCA_MULTIMEDIA_CATEGORY = 227;     
+     SCCCA_MULTIMEDIA_LYRICS = 228;     
+     SCCCA_MULTIMEDIA_TVNETWORK = 229;     
+     SCCCA_MULTIMEDIA_TVSHOW = 230;     
+     SCCCA_MULTIMEDIA_EPISODE = 231;     
+     SCCCA_MULTIMEDIA_PURCHASEDATE = 232;     
+     SCCCA_XMPNAMESPACE = 233;     
+  { system metadata as the document property  }
+     SCCCA_SYSTEM_FILESIZE = 250;
+     SCCCA_SYSTEM_FILECREATED = 251;     
+     SCCCA_SYSTEM_FILEMODIFIED = 252;     
+     SCCCA_USERDEFINEDPROP = 500;     
+  {
+  |   If dwType equals SCCCA_BEGINTAG or SCCCA_ENDTAG
+  |   and dwSubType equals SCCCA_EMAILFIELD
+  |   then dwData1 can be:
+   }
+  {  Base must equal the first e-mail related field.   }
+     SCCCA_MAIL_BASE = $0001366A;     
+     SCCCA_MAIL_TO = $0001366A;     
+     SCCCA_MAIL_CC = $0001366B;     
+     SCCCA_MAIL_BCC = $0001366C;     
+     SCCCA_MAIL_SUBJECT = $0001366D;     
+     SCCCA_MAIL_MSGFLAG = $0001366E;     
+     SCCCA_MAIL_FLAGSTS = $0001366F;     
+     SCCCA_MAIL_EXPIRES = $00013670;     
+     SCCCA_MAIL_CATEGORIES = $00013671;     
+     SCCCA_MAIL_IMPORTANCE = $00013672;     
+     SCCCA_MAIL_SENSITIVITY = $00013673;     
+     SCCCA_MAIL_LOCATION = $00013674;     
+     SCCCA_MAIL_FULLNAME = $00013675;     
+     SCCCA_MAIL_JOBTITLE = $00013676;     
+     SCCCA_MAIL_COMPANY = $00013677;     
+     SCCCA_MAIL_EMAIL = $00013678;     
+     SCCCA_MAIL_WEBPAGE = $00013679;     
+     SCCCA_MAIL_WORKPHONE = $0001367A;     
+     SCCCA_MAIL_HOMEPHONE = $0001367B;     
+     SCCCA_MAIL_FROM = $0001367C;     
+     SCCCA_MAIL_ATTACHMENT = $0001367D;     
+     SCCCA_MAIL_RTFBODY = $0001367E;     
+     SCCCA_MAIL_RECEIVED = $0001367F;     
+     SCCCA_MAIL_SIZE = $00013680;     
+     SCCCA_MAIL_LASTMODIFIED = $00013681;     
+     SCCCA_MAIL_NEWSGROUPS = $00013682;     
+     SCCCA_MAIL_SUBMITTIME = $00013683;     
+     SCCCA_MAIL_CCME = $00013684;     
+  {These following fields were specifically added for extracting the fields from a PST message }
+     SCCCA_MAIL_ALTERNATE_RECIPIENT_ALLOWED = $00013685;     
+     SCCCA_MAIL_CLIENT_SUBMIT_TIME = $00013686;     
+     SCCCA_MAIL_CREATION_TIME = $00013687;
+     SCCCA_MAIL_CONVERSATION_INDEX = $00013688;     
+     SCCCA_MAIL_CONVERSATION_TOPIC = $00013689;     
+     SCCCA_MAIL_MESSAGE_SUBMISSION_ID = $0001368A;     
+     SCCCA_MAIL_MESSAGE_CLASS = $0001368B;     
+     SCCCA_MAIL_ORIGINATOR_DELIVERY_REPORT_REQUESTED = $0001368C;     
+     SCCCA_MAIL_READ_RECEIPT_REQUESTED = $0001368D;     
+     SCCCA_MAIL_RCVD_REPRESENTING_ADDRTYPE = $0001368E;     
+     SCCCA_MAIL_RCVD_REPRESENTING_EMAIL_ADDRESS = $0001368F;     
+     SCCCA_MAIL_RCVD_REPRESENTING_ENTRYID = $00013690;     
+     SCCCA_MAIL_RCVD_REPRESENTING_NAME = $00013691;     
+     SCCCA_MAIL_RCVD_REPRESENTING_SEARCH_KEY = $00013692;     
+     SCCCA_MAIL_RECEIVED_BY_ADDRTYPE = $00013693;     
+     SCCCA_MAIL_RECEIVED_BY_EMAIL_ADDRESS = $00013694;     
+     SCCCA_MAIL_RECEIVED_BY_ENTRYID = $00013695;     
+     SCCCA_MAIL_RECEIVED_BY_NAME = $00013696;     
+     SCCCA_MAIL_RECEIVED_BY_SEARCH_KEY = $00013697;     
+     SCCCA_MAIL_RTF_IN_SYNC = $00013698;     
+     SCCCA_MAIL_RTF_SYNC_BODY_COUNT = $00013699;     
+     SCCCA_MAIL_RTF_SYNC_BODY_CRC = $0001369A;     
+     SCCCA_MAIL_RTF_SYNC_BODY_TAG = $0001369B;     
+     SCCCA_MAIL_RTF_SYNC_PREFIX_COUNT = $0001369C;     
+     SCCCA_MAIL_RTF_SYNC_TRAILING_COUNT = $0001369D;     
+     SCCCA_MAIL_SEARCH_KEY = $0001369E;     
+     SCCCA_MAIL_SENDER_ADDRTYPE = $0001369F;     
+     SCCCA_MAIL_SENDER_EMAIL_ADDRESS = $000136A0;     
+     SCCCA_MAIL_SENDER_ENTRYID = $000136A1;     
+     SCCCA_MAIL_SENDER_NAME = $000136A2;     
+     SCCCA_MAIL_SENDER_SEARCH_KEY = $000136A3;     
+     SCCCA_MAIL_SENT_REPRESENTING_ADDRTYPE = $000136A4;     
+     SCCCA_MAIL_SENT_REPRESENTING_EMAIL_ADDRESS = $000136A5;     
+     SCCCA_MAIL_SENT_REPRESENTING_ENTRYID = $000136A6;     
+     SCCCA_MAIL_SENT_REPRESENTING_SEARCH_KEY = $000136A7;     
+     SCCCA_MAIL_TRANSPORT_MESSAGE_HEADERS = $000136A8;     
+     SCCCA_MAIL_PRIORITY = $000136A9;     
+     SCCCA_MAIL_AUTO_FORWARDED = $000136AA;     
+     SCCCA_MAIL_DEFERRED_DELIVERY_TIME = $000136AB;     
+     SCCCA_MAIL_EXPIRY_TIME = $000136AC;     
+     SCCCA_MAIL_LATEST_DELIVERY_TIME = $000136AD;     
+     SCCCA_MAIL_RECIPIENT_REASSIGNMENT_PROHIBITED = $000136AE;     
+     SCCCA_MAIL_REPLY_TIME = $000136AF;     
+     SCCCA_MAIL_REPORT_TAG = $000136B0;
+     SCCCA_MAIL_RESPONSE_REQUESTED = $000136B1;     
+     SCCCA_MAIL_REPLY_REQUESTED = $000136B2;     
+     SCCCA_MAIL_DELETE_AFTER_SUBMIT = $000136B3;     
+     SCCCA_MAIL_MESSAGE_LOCALE_ID = $000136B4;     
+     SCCCA_MAIL_CREATOR_NAME = $000136B5;     
+     SCCCA_MAIL_CREATOR_ENTRYID = $000136B6;     
+     SCCCA_MAIL_LAST_MODIFIER_NAME = $000136B7;     
+     SCCCA_MAIL_LAST_MODIFIER_ENTRYID = $000136B8;     
+     SCCCA_MAIL_INTERNET_ARTICLE_NUMBER = $000136B9;     
+     SCCCA_MAIL_NT_SECURITY_DESCRIPTOR = $000136BA;     
+     SCCCA_MAIL_TRUST_SENDER = $000136BB;     
+     SCCCA_MAIL_INTERNET_MESSAGE_ID = $000136BC;     
+     SCCCA_MAIL_ATTR_HIDDEN = $000136BD;     
+     SCCCA_MAIL_ATTR_SYSTEM = $000136BE;     
+     SCCCA_MAIL_ATTR_READONLY = $000136BF;     
+     SCCCA_MAIL_INTERNET_CPID = $000136C0;     
+     SCCCA_MAIL_MESSAGE_CODEPAGE = $000136C1;     
+     SCCCA_MAIL_SENDER_FLAGS = $000136C2;     
+     SCCCA_MAIL_SENT_REPRESENTING_FLAGS = $000136C3;     
+     SCCCA_MAIL_RCVD_BY_FLAGS = $000136C4;     
+     SCCCA_MAIL_RCVD_REPRESENTING_FLAGS = $000136C5;     
+     SCCCA_MAIL_INET_MAIL_OVERRIDE_FORMAT = $000136C6;     
+     SCCCA_MAIL_MSG_EDITOR_FORMAT = $000136C7;     
+     SCCCA_MAIL_PROFILE_CONNECT_FLAGS = $000136C8;     
+     SCCCA_MAIL_SENT_REPRESENTING_NAME = $000136C9;     
+     SCCCA_MAIL_ENTRYID = $000136CA;     
+     SCCCA_MAIL_NORMALIZED_SUBJECT = $000136CB;     
+     SCCCA_MAIL_ATTENDEES = $000136CC;     
+     SCCCA_MAIL_REQATTENDEE = $000136CD;     
+     SCCCA_MAIL_OPTATTENDEE = $000136CE;     
+     SCCCA_MAIL_FILEAS = $000136CF;     
+     SCCCA_MAIL_DISPLAYAS = $000136D0;     
+     SCCCA_MAIL_TITLE = $000136D1;     
+     SCCCA_MAIL_SUFFIX = $000136D2;     
+     SCCCA_MAIL_NICKNAME = $000136D3;     
+     SCCCA_MAIL_PROFESSION = $000136D4;     
+     SCCCA_MAIL_DEPARTMENT = $000136D5;     
+     SCCCA_MAIL_OFFICE = $000136D6;     
+     SCCCA_MAIL_ANNIVERSARY = $000136D7;     
+     SCCCA_MAIL_BIRTHDATE = $000136D8;     
+     SCCCA_MAIL_ASSISTANTSNAME = $000136D9;
+     SCCCA_MAIL_SPOUSESNAME = $000136DA;     
+     SCCCA_MAIL_MANAGERSNAME = $000136DB;     
+     SCCCA_MAIL_BUSINESSADDRESS = $000136DC;     
+     SCCCA_MAIL_BUSINESSPHONE = $000136DD;     
+     SCCCA_MAIL_HOMEADDRESS = $000136DE;     
+     SCCCA_MAIL_OTHERADDRESS = $000136DF;     
+     SCCCA_MAIL_MOBILEPHONE = $000136E0;     
+     SCCCA_MAIL_BUSINESSFAX = $000136E1;     
+     SCCCA_MAIL_IMADDRESS = $000136E2;     
+     SCCCA_MAIL_INTERNETFREEBUSYADDR = $000136E3;     
+     SCCCA_MAIL_REMINDERTOPIC = $000136E4;     
+     SCCCA_MAIL_CONTACTS = $000136E5;     
+     SCCCA_MAIL_CALLBACKPHONE = $000136E6;     
+     SCCCA_MAIL_FIRST = $000136E7;     
+     SCCCA_MAIL_FAMILY = $000136E8;     
+     SCCCA_MAIL_TELENUMBER = $000136E9;     
+     SCCCA_MAIL_BUSINESSPHONE2 = $000136EA;     
+     SCCCA_MAIL_RADIOPHONE = $000136EB;     
+     SCCCA_MAIL_CARPHONE = $000136EC;     
+     SCCCA_MAIL_OTHERPHONE = $000136ED;     
+     SCCCA_MAIL_PAGERPHONE = $000136EE;     
+     SCCCA_MAIL_OTHERFAX = $000136EF;     
+     SCCCA_MAIL_HOMEFAX = $000136F0;     
+     SCCCA_MAIL_TELEXPHONE = $000136F1;     
+     SCCCA_MAIL_ISDN = $000136F2;     
+     SCCCA_MAIL_ASSISTANTPHONE = $000136F3;     
+     SCCCA_MAIL_HOMEPHONE2 = $000136F4;     
+     SCCCA_MAIL_MIDDLE = $000136F5;     
+     SCCCA_MAIL_TTYTTDPHONE = $000136F6;     
+     SCCCA_MAIL_GENDER = $000136F7;     
+     SCCCA_MAIL_PERSONALHOMEPAGE = $000136F8;     
+     SCCCA_MAIL_COMPANYPHONE = $000136F9;     
+     SCCCA_MAIL_HOMECITY = $000136FA;     
+     SCCCA_MAIL_HOMECOUNTRY = $000136FB;     
+     SCCCA_MAIL_POSTALCODE = $000136FC;     
+     SCCCA_MAIL_HOMESTATE = $000136FD;     
+     SCCCA_MAIL_HOMESTREET = $000136FE;     
+     SCCCA_MAIL_HOMEPOBOX = $000136FF;     
+     SCCCA_MAIL_OTHERCITY = $00013700;     
+     SCCCA_MAIL_OTHERCOUNTRY = $00013701;     
+     SCCCA_MAIL_OTHERPOSTALCODE = $00013702;
+     SCCCA_MAIL_OTHERSTATE = $00013703;     
+     SCCCA_MAIL_OTHERSTREET = $00013704;     
+     SCCCA_MAIL_OTHERPOBOX = $00013705;     
+     SCCCA_MAIL_BUSINESSSTREET = $00013706;     
+     SCCCA_MAIL_BUSINESSCITY = $00013707;     
+     SCCCA_MAIL_BUSINESSSTATE = $00013708;     
+     SCCCA_MAIL_BUSINESSPOSTALCODE = $00013709;     
+     SCCCA_MAIL_BUSINESSCOUNTRY = $0001370A;     
+     SCCCA_MAIL_BUSINESSPOBOX = $0001370B;     
+     SCCCA_MAIL_DISPLAYAS2 = $0001370C;     
+     SCCCA_MAIL_EMAIL2 = $0001370D;     
+     SCCCA_MAIL_DISPLAYAS3 = $0001370E;     
+     SCCCA_MAIL_EMAIL3 = $0001370F;     
+     SCCCA_MAIL_DTSTART = $00013710;     
+     SCCCA_MAIL_DTEND = $00013711;     
+     SCCCA_MAIL_START = $00013712;     
+     SCCCA_MAIL_DURATION = $00013713;     
+     SCCCA_MAIL_ACCUREATTYPE1 = $00013714;     
+     SCCCA_MAIL_ENTRY_TYPE = $00013715;     
+     SCCCA_MAIL_STATUS = $00013716;     
+     SCCCA_MAIL_PERCENT_COMPLETE = $00013717;     
+     SCCCA_MAIL_START_DATE = $00013718;     
+     SCCCA_MAIL_DUE_DATE = $00013719;     
+     SCCCA_MAIL_COMPLETED = $0001371A;     
+     SCCCA_MAIL_ACTUALWORK = $0001371B;     
+     SCCCA_MAIL_TOTAL_WORK = $0001371C;     
+     SCCCA_MAIL_OWNER = $0001371D;     
+     SCCCA_MAIL_BILLING = $0001371E;     
+     SCCCA_MAIL_MILEAGE = $0001371F;     
+  {  Default used if we can not retrieve the e-mail field id for any reason.   }
+     SCCCA_MAIL_UNKNOWN = $00013720;     
+  {  End must equal the last e-mail related field.   }
+     SCCCA_MAIL_END = $00013720;     
+     SCCCA_MAIL_USERDEFINED = $00014000;     
+  {
+  |   If dwType equals SCCCA_BEGINTAG and dwSubType equals SCCCA_DOCUMENTPROPERTY
+  |   then dwData1 can be:
+   }
+     SCCCA_MAILTYPE_EMAIL = 0;     
+     SCCCA_MAILTYPE_JOURNAL = 1;     
+     SCCCA_MAILTYPE_CONTACT = 2;
+     SCCCA_MAILTYPE_NOTE = 3;     
+     SCCCA_MAILTYPE_APPOINTMENT = 4;     
+     SCCCA_MAILTYPE_TASK = 5;     
+  { values for SCCCA_SUBDOCPROPERTY  }
+     SCCCA_SUBDOC_AUTHOR = 1;     
+     SCCCA_SUBDOC_CREATEDATE = 2;     
+     SCCCA_SUBDOC_LASTSAVEDATE = 3;     
+     SCCCA_SUBDOC_TITLE = 4;     
+     SCCCA_SUBDOC_NOTES = 5;     
+  { either initials or short version of name  }
+     SCCCA_SUBDOC_AUTHORSHORT = 6;     
+  { values for SCCCA_COMMENTREFERENCE  }
+     SCCCA_COMMENT_PARAGRAPH = 0;     
+     SCCCA_COMMENT_CELL = 1;     
+     SCCCA_COMMENT_SLIDE = 2;     
+     SCCCA_COMMENT_VECTORPAGE = 3;     
+  {
+  |   If dwType equals SCCCA_ENDTAG
+  |   and dwSubType equals SCCCA_DOCUMENTPROPERTY
+  |   then dwData1 can be:
+   }
+     SCCCA_NOGENERATEDTEXT = 0;     
+     SCCCA_GENERATEDTEXT = 1;     
+     SCCCA_COULDNOTGENERATE = $ffffffff;     
+  {
+  |   If dwType equals SCCCA_FILEPROPERTY
+  |   and dwSubType equals SCCCA_FILEID
+  |   then dwData1 can be one of the file id values found in sccfi.h
+   }
+  { Possible values for dwData2 element of SCCCAGETCONTENT  }
+  {
+  |   If dwType equals SCCCA_TEXT
+  |   then dwData2 is the character set of the data provided in pDataBuf.
+   }
+  { dwData3 and dwData4 are reserved  }
+  { Possible values of SCCCAGETCONTENT.dwSubType:  }
+  { If dwType equals SCCCA_STYLECHANGE then dwSubType can be ...  }
+     SCCCA_PARASTYLE = $00000001;     
+     SCCCA_CHARSTYLE = $00000002;     
+  {
+      Height and spacing are specified together because spacing can be relative
+      to height.
+   }
+     SCCCA_HEIGHTANDSPACING = $00000003;     
+  {
+      Indents are specified together because they can all be specified at once and
+      because first line indent can be relative to left indent.
+   }
+     SCCCA_INDENTS = $00000004;     
+  {  Original character encoding.   }
+     SCCCA_OCE = $00000005;     
+  {  Continuation for text.   }
+     SCCCA_TEXTCONT = $00000006;     
+  {  Continuation for hyperlink.   }
+     SCCCA_HYPERLINKCONT = $00000007;     
+  {
+      Possible values of dwData1 when dwType = SCCCA_STYLECHANGE and
+      dwSubType = SCCCA_PARASTYLE.
+   }
+     SCCCA_PARASTYLENAME = $00000001;     
+  {
+      Possible values of dwData1 when dwType = SCCCA_STYLECHANGE and
+      dwSubType = SCCCA_HEIGHTANDSPACING.  One or more orred together.
+   }
+     SCCCA_HEIGHT = $00010000;     
+     SCCCA_SPACING = $00020000;     
+  {
+      Possible values of dwData1 when dwType = SCCCA_STYLECHANGE and
+      dwSubType = SCCCA_INDENTS.  One or more orred together.
+   }
+     SCCCA_LEFTINDENT = $00010000;     
+     SCCCA_RIGHTINDENT = $00020000;     
+     SCCCA_FIRSTINDENT = $00040000;     
+  {  Possible values of dwSubType when dwType equals SCCCA_ANNOTATION.   }
+     SCCCA_ANNOTATION_FOOTNOTE = 1;     
+     SCCCA_ANNOTATION_ENDNOTE = 2;     
+     SCCCA_ANNOTATION_ANNOTATION = 3;     
+     SCCCA_ANNOTATION_NOTE = 4;     
+     SCCCA_ANNOTATION_COMMENT = 5;     
+     SCCCA_ANNOTATION_SLIDENOTE = 6;     
+
+  {
+  |  P R O T O T Y P E S
+   }
+  function CAOpenContent(hDoc:VTHDOC; phContent:VTLPHCONTENT):DAERR;cdecl;              external External_library name 'CAOpenContent';
+  function CACloseContent(hContent:VTHCONTENT):DAERR;cdecl;                             external External_library name 'CACloseContent';
+  function CAReadFirst(hContent:VTHCONTENT; pGetContent:PSCCCAGETCONTENT):DAERR;cdecl;  external External_library name 'CAReadFirst';
+  function CAReadNext(hContent:VTHCONTENT; pGetContent:PSCCCAGETCONTENT):DAERR;cdecl;   external External_library name 'CAReadNext';
+  function CATell(hContent:VTHCONTENT; pPos:PSCCDAPOS):DAERR;cdecl;                     external External_library name 'CATell';
+  function CASeek(hContent:VTHCONTENT; pPos:PSCCDAPOS):DAERR;cdecl;                     external External_library name 'CASeek';
+
+
+implementation
+
+end.

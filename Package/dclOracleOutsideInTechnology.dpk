@@ -1,0 +1,36 @@
+package dclOracleOutsideInTechnology;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Oracle Outside In Technology designtime'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  OracleOutsideInTechnology;
+
+contains
+  OutsideInViewerUnitReg in '..\Sources\OutsideInViewerUnitReg.pas';
+
+end.

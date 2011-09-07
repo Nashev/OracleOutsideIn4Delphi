@@ -1,0 +1,58 @@
+package OracleOutsideInTechnology;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Oracle Outside In Technology runtime'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl;
+
+contains
+  baseio in '..\Sources\baseio.pas',
+  charsets in '..\Sources\charsets.pas',
+  lodlg in '..\Sources\lodlg.pas',
+  lomenu in '..\Sources\lomenu.pas',
+  OutsideInViewerUnit in '..\Sources\OutsideInViewerUnit.pas',
+  sccanno in '..\Sources\sccanno.pas',
+  sccca in '..\Sources\sccca.pas',
+  sccda in '..\Sources\sccda.pas',
+  sccerrUnit in '..\Sources\sccerrUnit.pas',
+  sccfi in '..\Sources\sccfi.pas',
+  sccid in '..\Sources\sccid.pas',
+  sccio in '..\Sources\sccio.pas',
+  scclink in '..\Sources\scclink.pas',
+  sccop in '..\Sources\sccop.pas',
+  sccopval in '..\Sources\sccopval.pas',
+  sccra in '..\Sources\sccra.pas',
+  sccrc4 in '..\Sources\sccrc4.pas',
+  sccta in '..\Sources\sccta.pas',
+  scctype in '..\Sources\scctype.pas',
+  sccvw in '..\Sources\sccvw.pas',
+  sccvw_w in '..\Sources\sccvw_w.pas',
+  verbuild in '..\Sources\verbuild.pas',
+  vtchars in '..\Sources\vtchars.pas';
+
+end.
